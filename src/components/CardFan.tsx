@@ -14,8 +14,11 @@ export const CardFan: React.FC = () => {
       {HERO_CARDS.map((card, idx) => (
         <div
           key={card.id}
+          className="relative"
           style={{
+            zIndex: card.zIndex,
             marginLeft: idx === 0 ? 0 : 'calc(-48 * var(--u))',
+            transform: `translate(calc(${card.translateXOffsetPx} * var(--u)), calc(${card.translateYPx} * var(--u)))`,
           }}
         >
           <HeroCard card={card} />

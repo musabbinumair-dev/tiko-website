@@ -5,18 +5,34 @@
     --font-bricolage: 'Bricolage Grotesque', sans-serif;
     --font-pinyon: 'Pinyon Script', 'Great Vibes', cursive;
     --font-outfit: 'Outfit', sans-serif;
+    --u: min(calc(100vw / 1440), calc(100vh / 900));
+    --u: min(calc(100vw / 1440), calc(100svh / 900));
+    --u: min(calc(100vw / 1440), calc(100dvh / 900));
   }
 }
 
 html, body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  min-height: 100%;
   background-color: #0E0E0E;
   color: #FFFFFF;
   font-family: var(--font-outfit);
   overflow-x: hidden;
-  user-select: none;
+  overflow-y: auto;
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #0E0E0E;
 }
 
 /* Background grain texture */
@@ -27,11 +43,15 @@ html, body {
 .hero-section {
   --u: min(calc(100vw / 1440), calc(100vh / 900));
   --u: min(calc(100vw / 1440), calc(100svh / 900));
+  --u: min(calc(100vw / 1440), calc(100dvh / 900));
   height: calc(900 * var(--u));
   max-height: 100vh;
-  max-height: 100svh;
+  max-height: 100dvh;
   background-color: #0E0E0E;
   overflow: hidden;
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
