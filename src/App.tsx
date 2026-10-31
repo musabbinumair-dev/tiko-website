@@ -2,14 +2,10 @@ import { useState, useEffect } from 'react';
 import { Hero } from './components/Hero';
 import { Navbar } from './components/Navbar';
 import { ReleasesSection } from './components/ReleasesSection';
-import { DownloadToast } from './components/DownloadToast';
-import { InstallModal } from './components/InstallModal';
 
 export default function App() {
   const [replayKey, setReplayKey] = useState(0);
   const [currentTab, setCurrentTab] = useState('Home');
-  const [showToast, setShowToast] = useState(false);
-  const [showInstallModal, setShowInstallModal] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -23,11 +19,6 @@ export default function App() {
   }, []);
 
   const handleDownload = () => {
-    setShowToast(true);
-  };
-
-  const handleHowToInstall = () => {
-    setShowToast(false);
     setCurrentTab('Updates');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -63,16 +54,6 @@ export default function App() {
           onDownload={handleDownload}
         />
       )}
-
-      <DownloadToast
-        show={showToast}
-        onClose={() => setShowToast(false)}
-        onHowToInstall={handleHowToInstall}
-      />
-      <InstallModal
-        isOpen={showInstallModal}
-        onClose={() => setShowInstallModal(false)}
-      />
     </main>
   );
 }

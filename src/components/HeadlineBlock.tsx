@@ -1,21 +1,20 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { useReleaseInfo } from '../utils/useReleaseInfo';
+import { Smartphone } from 'lucide-react';
 
 const easeCurve = [0.22, 1, 0.36, 1] as const;
 
 export const HeadlineBlock: React.FC = () => {
   const shouldReduceMotion = useReducedMotion();
-  const { releaseInfo, loading } = useReleaseInfo();
 
   return (
     <div className="flex flex-col items-center text-center relative z-20 select-none">
       {/* 2. Badge */}
       <div style={{ marginBottom: 'calc(16 * var(--u))' }}>
         <motion.div
-          className="inline-flex items-center rounded-full bg-[#181818]/90 border border-white/10 backdrop-blur-md shadow-sm will-change-transform"
+          className="inline-flex items-center rounded-full bg-[#181818]/90 border border-white/10 backdrop-blur-md shadow-sm will-change-transform overflow-hidden"
           style={{
-            padding: 'calc(6 * var(--u)) calc(16 * var(--u))',
+            padding: 'calc(4 * var(--u)) calc(16 * var(--u)) calc(2 * var(--u)) calc(10 * var(--u))',
           }}
           initial={shouldReduceMotion ? false : { scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -26,29 +25,23 @@ export const HeadlineBlock: React.FC = () => {
           }}
         >
           <span
-            className="font-semibold text-white/90 tracking-wide font-['Outfit'] inline-flex items-center gap-1.5"
+            className="font-semibold text-white/90 tracking-wide font-['Outfit'] inline-flex items-center gap-1"
             style={{
               fontSize: 'calc(13 * var(--u))',
             }}
           >
+            <img
+              src="/assets/aistudio/52172d58-fe5a-48b7-940c-263d1d1e0f22_removalai_preview_d29ac9c6.png"
+              alt="Android Mascot"
+              className="inline-block object-contain self-end"
+              style={{
+                height: 'calc(22 * var(--u))',
+                width: 'auto',
+                marginBottom: 'calc(-2 * var(--u))',
+                marginRight: 'calc(-2 * var(--u))',
+              }}
+            />
             <span>Now on Android</span>
-            <span className="text-white/30">•</span>
-            {loading && !releaseInfo ? (
-              <span
-                className="inline-block bg-white/10 rounded-full animate-pulse"
-                style={{
-                  width: 'calc(48 * var(--u))',
-                  height: 'calc(10 * var(--u))',
-                }}
-              />
-            ) : releaseInfo && releaseInfo.version ? (
-              <span className="text-white/70 font-normal">
-                {releaseInfo.version}
-                {releaseInfo.sizeMB ? ` (${releaseInfo.sizeMB} MB)` : ''}
-              </span>
-            ) : (
-              <span className="text-white/70 font-normal">Latest version</span>
-            )}
           </span>
         </motion.div>
       </div>

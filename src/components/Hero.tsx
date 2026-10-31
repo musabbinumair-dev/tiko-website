@@ -4,6 +4,7 @@ import { Navbar } from './Navbar';
 import { HeadlineBlock } from './HeadlineBlock';
 import { CardFan } from './CardFan';
 import { HERO_STARS } from '../utils/heroConfig';
+import { BlackHoleEffect } from './ui/black-hole-vortex-animation';
 
 const easeCurve = [0.22, 1, 0.36, 1] as const;
 
@@ -18,9 +19,12 @@ export const Hero: React.FC<HeroProps> = ({ currentTab, onTabChange, onDownload 
 
   return (
     <section className="hero-section text-white select-none">
+      {/* 21st.dev Black Hole Vortex Background Animation */}
+      <BlackHoleEffect className="z-0 opacity-80" />
+
       {/* Film grain texture overlay */}
       <div
-        className="absolute inset-0 bg-grain pointer-events-none z-10 opacity-70"
+        className="absolute inset-0 bg-grain pointer-events-none z-10 opacity-50"
         aria-hidden="true"
       />
 
