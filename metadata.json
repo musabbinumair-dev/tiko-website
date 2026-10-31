@@ -1,0 +1,6 @@
+{
+  "name": "Tiko - Task Manager",
+  "description": "Simple tasks. Big results. A marketing landing page hero for Tiko task manager mobile app.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
