@@ -1,5 +1,5 @@
 import React, { useId, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 export interface BlackHoleEffectProps {
   className?: string;
@@ -85,29 +85,23 @@ export function BlackHoleEffect({
         <circle cx="348" cy="158" r="42" fill={`url(#${gradientId})`} />
         <circle cx="348" cy="158" r="6" fill="#0E0E0E" />
 
-        {/* Animated paths being pulled into the black hole - flicker-free keyframes */}
-        {paths.map((path) => (
-          <motion.path
-            key={path.id}
-            d={path.d}
-            stroke="currentColor"
-            strokeWidth={path.width}
-            strokeLinecap="round"
-            style={{ opacity: 0 }}
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{
-              pathLength: [0, 1],
-              opacity: [0, path.opacity, path.opacity * 0.8, 0],
-            }}
-            transition={{
-              duration: path.duration,
-              repeat: Infinity,
-              ease: 'linear',
-              delay: path.delay,
-              times: [0, 0.15, 0.85, 1],
-            }}
-          />
-        ))}
+        {/* Continuous, non-blinking flowing vortex lines */}
+        <motion.g
+          animate={{ rotate: 360 }}
+          transition={{ duration: 100, repeat: Infinity, ease: 'linear' }}
+          style={{ transformOrigin: '348px 158px' }}
+        >
+          {paths.map((path) => (
+            <path
+              key={path.id}
+              d={path.d}
+              stroke="currentColor"
+              strokeWidth={path.width}
+              strokeLinecap="round"
+              opacity={path.opacity * 0.4}
+            />
+          ))}
+        </motion.g>
       </svg>
     </div>
   );

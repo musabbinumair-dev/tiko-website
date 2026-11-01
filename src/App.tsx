@@ -1,11 +1,18 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Hero } from './components/Hero';
-import { Navbar } from './components/Navbar';
-import { ReleasesSection } from './components/ReleasesSection';
+import { InstallModal } from './components/InstallModal';
+import { DownloadModal } from './components/DownloadModal';
+import { DownloadToast } from './components/DownloadToast';
+import { useReleaseInfo } from './utils/useReleaseInfo';
 
 export default function App() {
   const [replayKey, setReplayKey] = useState(0);
-  const [currentTab, setCurrentTab] = useState('Home');
+  const [showInstallModal, setShowInstallModal] = useState(false);
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
+  const [showDownloadToast, setShowDownloadToast] = useState(false);
+
+  const { releaseInfo } = useReleaseInfo();
+  const latestVersion = releaseInfo?.version ? `v${releaseInfo.version}` : 'v1.2.0';
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -19,41 +26,55 @@ export default function App() {
   }, []);
 
   const handleDownload = () => {
-    setCurrentTab('Updates');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setShowDownloadToast(true);
+    // Trigger direct APK download from GitHub
+    const link = document.createElement('a');
+    link.href = 'https://github.com/musabbinumair-dev/Tiko/releases/latest/download/tiko.apk';
+    link.download = 'tiko.apk';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleTabChange = (tab: string) => {
-    setCurrentTab(tab);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (tab === 'Download') {
+      setShowDownloadModal(true);
+      return;
+    }
   };
 
   return (
-    <main className="w-full min-h-screen bg-[#0E0E0E] flex flex-col items-center overflow-x-hidden">
-      {currentTab === 'Updates' ? (
-        <div className="w-full min-h-screen bg-[#0E0E0E] flex flex-col items-center">
-          {/* Top navigation header for Updates page */}
-          <div className="w-full max-w-[1440px] mx-auto z-40">
-            <Navbar
-              currentTab={currentTab}
-              onTabChange={handleTabChange}
-              onDownload={handleDownload}
-            />
-          </div>
-
-          {/* Standalone Releases section */}
-          <div className="w-full flex-1">
-            <ReleasesSection id="updates" onDownload={handleDownload} />
-          </div>
-        </div>
-      ) : (
+    <main className="w-full h-screen h-[100dvh] bg-[#0E0E0E] text-white flex flex-col items-center overflow-hidden selection:bg-[#C8DB6A] selection:text-black">
+      {/* Exact Mockup Hero View */}
+      <div className="w-full h-full h-[100dvh] overflow-hidden flex flex-col items-center justify-center">
         <Hero
           key={replayKey}
-          currentTab={currentTab}
+          currentTab="Home"
           onTabChange={handleTabChange}
           onDownload={handleDownload}
         />
-      )}
+      </div>
+
+      {/* Interactive Modals & Toasts */}
+      <InstallModal
+        isOpen={showInstallModal}
+        onClose={() => setShowInstallModal(false)}
+      />
+
+      <DownloadModal
+        isOpen={showDownloadModal}
+        onClose={() => setShowDownloadModal(false)}
+      />
+
+      <DownloadToast
+        show={showDownloadToast}
+        onClose={() => setShowDownloadToast(false)}
+        onHowToInstall={() => {
+          setShowDownloadToast(false);
+          setShowInstallModal(true);
+        }}
+      />
     </main>
   );
 }
+

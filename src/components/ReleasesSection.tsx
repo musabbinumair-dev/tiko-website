@@ -144,7 +144,7 @@ export const ReleasesSection: React.FC<ReleasesSectionProps> = ({
   return (
     <section
       id={id}
-      className="w-full bg-[#0E0E0E] text-white py-20 px-6 sm:px-8 border-t border-white/5 relative z-30"
+      className="w-full bg-[#0E0E0E] text-white py-12 sm:py-20 px-4 sm:px-8 pb-28 lg:pb-20 border-t border-white/5 relative z-30"
     >
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
@@ -322,7 +322,7 @@ export const ReleasesSection: React.FC<ReleasesSectionProps> = ({
                       href={downloadUrl}
                       download="tiko.apk"
                       onClick={() => onDownload?.()}
-                      className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-white text-black font-semibold text-xs sm:text-sm hover:bg-neutral-100 active:scale-95 transition-all shadow-md self-start sm:self-auto cursor-pointer whitespace-nowrap"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl sm:rounded-full bg-white text-black font-semibold text-xs sm:text-sm hover:bg-neutral-100 active:scale-95 transition-all shadow-md w-full sm:w-auto cursor-pointer whitespace-nowrap min-h-[44px]"
                     >
                       <svg className="w-4 h-4 stroke-[2.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />

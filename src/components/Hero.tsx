@@ -12,15 +12,23 @@ interface HeroProps {
   currentTab?: string;
   onTabChange?: (tab: string) => void;
   onDownload?: () => void;
+  onOpenInstallModal?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ currentTab, onTabChange, onDownload }) => {
+export const Hero: React.FC<HeroProps> = ({
+  currentTab,
+  onTabChange,
+  onDownload,
+  onOpenInstallModal,
+}) => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <section className="hero-section text-white select-none">
-      {/* 21st.dev Black Hole Vortex Background Animation */}
-      <BlackHoleEffect className="z-0 opacity-80" />
+      {/* 21st.dev Black Hole Vortex Background Animation - desktop only */}
+      <div className="absolute inset-0 z-0 opacity-80 hidden md:block pointer-events-none">
+        <BlackHoleEffect className="w-full h-full" />
+      </div>
 
       {/* Film grain texture overlay */}
       <div
@@ -30,20 +38,16 @@ export const Hero: React.FC<HeroProps> = ({ currentTab, onTabChange, onDownload 
 
       {/* Composition div */}
       <div
-        className="relative mx-auto overflow-visible flex flex-col justify-between"
-        style={{
-          width: 'calc(1440 * var(--u))',
-          height: 'calc(900 * var(--u))',
-        }}
+        className="relative mx-auto overflow-hidden md:overflow-visible flex flex-col justify-between w-full h-full min-h-[100dvh] max-h-[100dvh] md:min-h-0 md:max-h-none md:w-[calc(1440*var(--u))] md:h-[calc(900*var(--u))]"
       >
-        {/* Faint 4-point sparkle stars scattered around */}
-        <div className="absolute inset-0 pointer-events-none z-10" aria-hidden="true">
+        {/* Faint 4-point sparkle stars scattered around - desktop only */}
+        <div className="absolute inset-0 pointer-events-none z-10 hidden md:block" aria-hidden="true">
           {HERO_STARS.map((star, idx) => (
             <motion.svg
               key={idx}
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="absolute transform -translate-x-1/2 -translate-y-1/2 will-change-transform"
+              className="absolute transform -translate-x-1/2 -translate-y-1/2"
               style={{
                 left: star.x,
                 top: star.y,
@@ -79,17 +83,14 @@ export const Hero: React.FC<HeroProps> = ({ currentTab, onTabChange, onDownload 
           currentTab={currentTab}
           onTabChange={onTabChange}
           onDownload={onDownload}
+          onOpenInstallModal={onOpenInstallModal}
         />
 
-        {/* Center content: Badge + Headline */}
+        {/* Center content: Badge + Headline + Subtitle + Mobile CTA */}
         <div
-          className="w-full mx-auto flex-1 flex flex-col justify-center items-center"
-          style={{
-            paddingTop: 'calc(8 * var(--u))',
-            paddingBottom: 'calc(8 * var(--u))',
-          }}
+          className="w-full mx-auto flex-1 flex flex-col justify-center items-center py-2 md:py-0 md:pt-[calc(8*var(--u))] md:pb-[calc(8*var(--u))]"
         >
-          <HeadlineBlock />
+          <HeadlineBlock onDownload={onDownload} />
         </div>
 
         {/* Card fan cropped by the bottom edge of the viewport */}

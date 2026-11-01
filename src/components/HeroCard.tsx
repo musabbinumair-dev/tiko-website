@@ -14,8 +14,55 @@ const CARD_ANIM_CONFIG: Record<string, { startX: string; delay: number }> = {
   study: { startX: '-225%', delay: 1.14 },
 };
 
+const MOBILE_CARD_STYLES: Record<
+  string,
+  {
+    cardWidth: string;
+    cardHeight: string;
+    assetWidth: string;
+    assetTop: string;
+  }
+> = {
+  streak: {
+    cardWidth: 'clamp(172px, 46vw, 198px)',
+    cardHeight: 'clamp(296px, 37vh, 332px)',
+    assetWidth: 'clamp(152px, 40vw, 175px)',
+    assetTop: 'clamp(72px, 8.5vh, 82px)',
+  },
+  health: {
+    cardWidth: 'clamp(160px, 43vw, 184px)',
+    cardHeight: 'clamp(276px, 35vh, 312px)',
+    assetWidth: 'clamp(138px, 36vw, 156px)',
+    assetTop: 'clamp(74px, 8.5vh, 84px)',
+  },
+  personal: {
+    cardWidth: 'clamp(160px, 43vw, 184px)',
+    cardHeight: 'clamp(276px, 35vh, 312px)',
+    assetWidth: 'clamp(134px, 35vw, 152px)',
+    assetTop: 'clamp(70px, 8vh, 80px)',
+  },
+  work: {
+    cardWidth: 'clamp(156px, 42vw, 180px)',
+    cardHeight: 'clamp(258px, 33vh, 292px)',
+    assetWidth: 'clamp(138px, 36vw, 156px)',
+    assetTop: 'clamp(74px, 8.5vh, 84px)',
+  },
+  study: {
+    cardWidth: 'clamp(156px, 42vw, 180px)',
+    cardHeight: 'clamp(258px, 33vh, 292px)',
+    assetWidth: 'clamp(138px, 36vw, 156px)',
+    assetTop: 'clamp(78px, 9vh, 88px)',
+  },
+};
+
 export const HeroCard: React.FC<HeroCardProps> = ({ card }) => {
   const cssVars = getCardStyleVariables(card);
+  const mob = MOBILE_CARD_STYLES[card.id] ?? {
+    cardWidth: '170px',
+    cardHeight: '280px',
+    assetWidth: '140px',
+    assetTop: '72px',
+  };
   const isPersonal = card.id === 'personal';
   const isFire = card.id === 'streak';
   const shouldReduceMotion = useReducedMotion();
@@ -24,9 +71,13 @@ export const HeroCard: React.FC<HeroCardProps> = ({ card }) => {
 
   return (
     <motion.div
-      className="relative shrink-0 overflow-hidden select-none will-change-transform"
+      className="hero-card-base relative shrink-0 overflow-hidden select-none"
       style={{
         ...cssVars,
+        ['--m-card-width' as string]: mob.cardWidth,
+        ['--m-card-height' as string]: mob.cardHeight,
+        ['--m-asset-width' as string]: mob.assetWidth,
+        ['--m-asset-top' as string]: mob.assetTop,
         width: 'var(--card-width)',
         height: 'var(--card-height)',
         borderRadius: 'calc(40 * var(--u))',
@@ -63,7 +114,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ card }) => {
     >
       {/* Card Header: Title + circular button */}
       <div
-        className="flex items-center relative z-20"
+        className="hero-card-header flex items-center relative z-20"
         style={{
           paddingTop: 'calc(28 * var(--u))',
           paddingLeft: 'calc(32 * var(--u))',
@@ -72,7 +123,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ card }) => {
         }}
       >
         <h2
-          className="font-['Outfit'] font-semibold tracking-tight leading-none"
+          className="hero-card-title font-['Outfit'] font-semibold tracking-tight leading-none"
           style={{
             color: card.titleColor,
             fontSize: 'calc(32 * var(--u))',
@@ -81,7 +132,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ card }) => {
           {card.title}
         </h2>
         <div
-          className="rounded-full flex items-center justify-center shrink-0 shadow-sm"
+          className="hero-card-btn rounded-full flex items-center justify-center shrink-0 shadow-sm"
           style={{
             width: 'calc(32 * var(--u))',
             height: 'calc(32 * var(--u))',
@@ -92,7 +143,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ card }) => {
         >
           {/* Circular ↗ arrow */}
           <svg
-            className="stroke-[2.5] fill-none"
+            className="hero-card-btn-svg stroke-[2.5] fill-none"
             style={{
               width: 'calc(16 * var(--u))',
               height: 'calc(16 * var(--u))',
@@ -111,7 +162,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ card }) => {
       {/* Optional spark accent dashes on the card */}
       {card.spark && (
         <div
-          className={`absolute ${card.spark.positionClass} z-10 flex pointer-events-none`}
+          className={`absolute ${card.spark.positionClass} z-10 flex pointer-events-none scale-75 md:scale-100 origin-top-left`}
           style={{
             gap: 'calc(4 * var(--u))',
             transform: card.spark.rotationDeg ? `rotate(${card.spark.rotationDeg}deg)` : undefined,
@@ -119,18 +170,14 @@ export const HeroCard: React.FC<HeroCardProps> = ({ card }) => {
           aria-hidden="true"
         >
           <span
-            className="rounded-full"
+            className="rounded-full w-[2px] h-[8px] md:w-[calc(3*var(--u))] md:h-[calc(12*var(--u))]"
             style={{
-              width: 'calc(3 * var(--u))',
-              height: 'calc(12 * var(--u))',
               backgroundColor: card.spark.color,
             }}
           />
           <span
-            className="rounded-full"
+            className="rounded-full w-[2px] h-[8px] md:w-[calc(3*var(--u))] md:h-[calc(12*var(--u))]"
             style={{
-              width: 'calc(3 * var(--u))',
-              height: 'calc(12 * var(--u))',
               backgroundColor: card.spark.color,
             }}
           />
@@ -141,7 +188,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ card }) => {
       <motion.img
         src={card.asset.src}
         alt={card.asset.alt}
-        className="absolute pointer-events-none z-10 max-w-none will-change-transform"
+        className="hero-card-asset absolute pointer-events-none z-10 max-w-none"
         style={{
           width: 'var(--asset-width)',
           top: 'var(--asset-top)',

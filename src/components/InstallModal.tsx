@@ -36,7 +36,7 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose }) =
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 16 }}
             transition={{ type: 'spring', stiffness: 350, damping: 26 }}
-            className="relative w-full max-w-md bg-[#161618] border border-white/10 rounded-3xl p-6 shadow-[0_24px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] text-white font-['Outfit'] select-none z-10"
+            className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto bg-[#161618] border border-white/10 rounded-3xl p-6 shadow-[0_24px_50px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.15)] text-white font-['Outfit'] select-none z-10"
           >
             {/* Header */}
             <div className="flex items-center justify-between pb-4 border-b border-white/10">

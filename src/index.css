@@ -44,8 +44,8 @@ html, body {
   --u: min(calc(100vw / 1440), calc(100vh / 900));
   --u: min(calc(100vw / 1440), calc(100svh / 900));
   --u: min(calc(100vw / 1440), calc(100dvh / 900));
-  height: calc(900 * var(--u));
-  max-height: 100vh;
+  height: 100dvh;
+  min-height: 100dvh;
   max-height: 100dvh;
   background-color: #0E0E0E;
   overflow: hidden;
@@ -55,3 +55,80 @@ html, body {
   align-items: center;
   justify-content: center;
 }
+
+@media (min-width: 768px) {
+  .hero-section {
+    height: calc(900 * var(--u));
+    min-height: unset;
+    max-height: 100dvh;
+  }
+}
+
+/* Mobile Hero Card Rules (< 768px) */
+@media (max-width: 767px) {
+  .hero-card-base {
+    width: var(--m-card-width) !important;
+    height: var(--m-card-height) !important;
+    border-radius: 32px !important;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+  }
+  .hero-card-asset {
+    width: var(--m-asset-width) !important;
+    top: var(--m-asset-top) !important;
+  }
+  .hero-card-header {
+    padding-top: 20px !important;
+    padding-left: 20px !important;
+    padding-right: 18px !important;
+    gap: 8px !important;
+  }
+  .hero-card-title {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+  }
+  .hero-card-btn {
+    width: 26px !important;
+    height: 26px !important;
+  }
+  .hero-card-btn-svg {
+    width: 13px !important;
+    height: 13px !important;
+    stroke-width: 2.8 !important;
+  }
+  .card-fan-wrap {
+    margin-bottom: -32px !important;
+  }
+  .card-fan-col {
+    margin-left: var(--m-margin-left) !important;
+    transform: var(--m-transform) !important;
+  }
+}
+
+/* Modern GitHub Button Animations */
+@keyframes github-shimmer {
+  0% { transform: translateX(-150%); }
+  50%, 100% { transform: translateX(180%); }
+}
+
+.animate-shimmer {
+  animation: github-shimmer 3.2s ease-in-out infinite;
+}
+
+@keyframes star-pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.4));
+  }
+  50% {
+    transform: scale(1.18);
+    filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.95));
+  }
+}
+
+.animate-star {
+  animation: star-pulse 2.2s ease-in-out infinite;
+}
+
+
+

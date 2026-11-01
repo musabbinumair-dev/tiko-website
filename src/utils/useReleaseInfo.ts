@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CACHE_KEY = 'tiko_latest_release_cache';
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
