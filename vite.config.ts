@@ -3,10 +3,27 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import {defineConfig} from 'vite';
 
+// Intercept any .apk requests on same domain to prevent SPA index.html fallback
+const blockApkSpaRewrite = {
+  name: 'block-apk-spa-rewrite',
+  configureServer(server: any) {
+    server.middlewares.use((req: any, res: any, next: any) => {
+      const urlPath = (req.url || '').split('?')[0];
+      if (urlPath.endsWith('.apk')) {
+        res.statusCode = 404;
+        res.setHeader('Content-Type', 'text/plain');
+        res.end('Not Found: APKs are served directly from official GitHub releases.');
+        return;
+      }
+      next();
+    });
+  },
+};
+
 export default defineConfig(() => {
   return {
     base: './',
-    plugins: [react(), tailwindcss()],
+    plugins: [react(), tailwindcss(), blockApkSpaRewrite],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

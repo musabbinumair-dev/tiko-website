@@ -151,8 +151,12 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
             <a
               href="https://github.com/musabbinumair-dev/Tiko/releases/latest/download/tiko.apk"
-              download="tiko.apk"
-              onClick={() => onDownload?.()}
+              onClick={(e) => {
+                if (onDownload) {
+                  e.preventDefault();
+                  onDownload();
+                }
+              }}
               className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white text-black font-['Outfit'] font-bold text-sm flex items-center justify-center gap-2 shadow-lg hover:bg-neutral-200 transition-all cursor-pointer no-underline text-center"
             >
               <span>Download APK (34.2 MB)</span>

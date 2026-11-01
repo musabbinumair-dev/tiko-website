@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'motion/react';
 import SlideCommit from './SlideCommit';
 
-const DOWNLOAD_URL = '/tiko.apk';
+import { FALLBACK_APK_URL, prefetchLatestApk } from '../utils/downloadApk';
+
 const GITHUB_REPO_URL = 'https://github.com/musabbinumair-dev/Tiko';
 
 interface NavbarProps {
@@ -18,37 +19,21 @@ const GitHubButton: React.FC<{ isDesktop?: boolean }> = ({ isDesktop = false }) 
     target="_blank"
     rel="noopener noreferrer"
     className={`bg-white text-black font-semibold rounded-full shadow-md hover:bg-neutral-100 active:scale-95 transition-all cursor-pointer whitespace-nowrap inline-flex items-center gap-2 no-underline text-center ${
-      isDesktop ? '' : 'pl-3.5 pr-2.5 py-1.5 text-xs sm:text-sm'
-    }`}
-    style={
       isDesktop
-        ? {
-            padding: 'calc(10 * var(--u)) calc(20 * var(--u))',
-            fontSize: 'calc(14 * var(--u))',
-          }
-        : undefined
-    }
+        ? 'md:h-[40px] md:box-border md:px-[clamp(14px,1.5vw,22px)] md:py-0 md:text-[clamp(12px,min(1vw,1.6dvh),15px)] leading-none'
+        : 'pl-3.5 pr-2.5 py-1.5 text-xs sm:text-sm'
+    }`}
   >
     <span>Rate on GitHub</span>
     <span
       className={`rounded-full bg-black text-white flex items-center justify-center shrink-0 ${
-        isDesktop ? '' : 'w-5 h-5'
+        isDesktop ? 'md:w-[22px] md:h-[22px]' : 'w-5 h-5'
       }`}
-      style={
-        isDesktop
-          ? {
-              width: 'calc(20 * var(--u))',
-              height: 'calc(20 * var(--u))',
-            }
-          : undefined
-      }
     >
       <svg
-        className="fill-white"
-        style={{
-          width: isDesktop ? 'calc(12 * var(--u))' : '12px',
-          height: isDesktop ? 'calc(12 * var(--u))' : '12px',
-        }}
+        className={`fill-white ${
+          isDesktop ? 'md:w-3 md:h-3' : 'w-3 h-3'
+        }`}
         viewBox="0 0 24 24"
         aria-hidden="true"
       >
@@ -75,14 +60,14 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <header
-      className="w-full mx-auto flex items-center justify-between relative z-40 select-none px-5 pt-4 pb-3 sm:px-6 sm:pt-6 md:px-0 md:pt-[calc(32*var(--u))] md:pb-[calc(16*var(--u))] md:pl-[calc(48*var(--u))] md:pr-[calc(48*var(--u))]"
+      className="w-full flex items-center justify-between relative z-40 select-none px-5 pt-4 pb-3 sm:px-6 sm:pt-6 md:px-[clamp(24px,4vw,64px)] md:pt-[clamp(16px,2.5dvh,32px)] md:pb-[clamp(8px,1.2dvh,16px)] shrink-0"
     >
       {/* Brand logo - clean without sparkles */}
       <div className="flex items-center">
         <a
           href="#home"
           onClick={handleLogoClick}
-          className="text-white font-['Outfit'] font-black tracking-tight flex items-center cursor-pointer text-2xl xs:text-3xl md:text-[calc(34*var(--u))]"
+          className="text-white font-['Outfit'] font-black tracking-tight flex items-center cursor-pointer text-2xl xs:text-3xl md:text-[clamp(24px,min(2.5vw,3.8dvh),36px)]"
         >
           Tiko
         </a>
@@ -93,36 +78,39 @@ export const Navbar: React.FC<NavbarProps> = ({
         <GitHubButton />
       </div>
 
-      {/* Desktop Right action: Both GitHub Promotion Button + SlideCommit Download Button */}
+      {/* Desktop Right action: GitHub Promotion Button + Conditional SlideCommit Download Button */}
       <div
-        className="hidden md:flex items-center"
-        style={{
-          gap: 'calc(12 * var(--u))',
-        }}
+        className="hidden md:flex items-center gap-[clamp(8px,1vw,16px)]"
       >
         <GitHubButton isDesktop />
 
-        <SlideCommit
-          label="Slide to Download"
-          doneLabel="Download Started"
-          errorLabel="Failed"
-          onConfirm={async () => {
-            onDownload?.();
-            await new Promise((resolve) => setTimeout(resolve, 600));
-          }}
-          trackColor="#161619"
-          handleColor="#ffffff"
-          successColor="#C8DB6A"
-          dangerColor="#ef4444"
-          width={210}
-          height={40}
-          radius={20}
-          pad={2}
-          speed={50}
-          returnBounce={0.38}
-          landingDip={0.026}
-          holdMs={1800}
-        />
+        <div className="navbar-download items-center">
+          <SlideCommit
+            label="Slide to Download"
+            doneLabel="Download Started"
+            errorLabel="Couldn't start the download"
+            onConfirm={async () => {
+              // Pre-validate APK release info
+              await prefetchLatestApk();
+            }}
+            onDone={() => {
+              // Only trigger download after download started animation completes
+              onDownload?.();
+            }}
+            trackColor="#161619"
+            handleColor="#ffffff"
+            successColor="#C8DB6A"
+            dangerColor="#ef4444"
+            width={210}
+            height={40}
+            radius={20}
+            pad={2}
+            speed={50}
+            returnBounce={0.38}
+            landingDip={0.026}
+            holdMs={1800}
+          />
+        </div>
       </div>
     </header>
   );

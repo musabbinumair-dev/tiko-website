@@ -236,8 +236,12 @@ export const MobileCardStage: React.FC<MobileCardStageProps> = ({
       <div className="w-full max-w-sm flex flex-col gap-2.5 mt-6 px-4">
         <a
           href="https://github.com/musabbinumair-dev/Tiko/releases/latest/download/tiko.apk"
-          download="tiko.apk"
-          onClick={() => onDownload?.()}
+          onClick={(e) => {
+            if (onDownload) {
+              e.preventDefault();
+              onDownload();
+            }
+          }}
           className="w-full min-h-[50px] py-3.5 px-6 rounded-2xl bg-white text-black font-['Outfit'] font-bold text-sm flex items-center justify-center gap-2 shadow-[0_12px_28px_rgba(255,255,255,0.15)] active:scale-[0.98] transition-transform text-center no-underline cursor-pointer"
         >
           <svg className="w-4 h-4 stroke-[2.5]" viewBox="0 0 24 24" fill="none" stroke="currentColor">

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { INITIAL_RELEASES, AppRelease } from '../utils/releasesConfig';
 
+import { downloadLatestApk, FALLBACK_APK_URL } from '../utils/downloadApk';
+
 interface DownloadModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -19,19 +21,24 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
 
   const latestRelease = releases.find((r) => r.isLatest) || releases[0];
 
-  const handleDownload = (release: AppRelease) => {
+  const handleDownload = async (release: AppRelease) => {
     setDownloadingVersion(release.version);
-    setTimeout(() => {
-      setDownloadingVersion(null);
-      const a = document.createElement('a');
-      a.href = '/tiko.apk';
-      a.download = 'tiko.apk';
-      document.body.appendChild(a);
-      a.click();
+    try {
+      if (release.isLatest) {
+        const result = await downloadLatestApk();
+        if (!result.success && result.error !== 'LOCKED') {
+          window.location.assign(release.downloadUrl || FALLBACK_APK_URL);
+        }
+      } else {
+        window.location.assign(release.downloadUrl || FALLBACK_APK_URL);
+      }
+    } catch {
+      window.location.assign(release.downloadUrl || FALLBACK_APK_URL);
+    } finally {
       setTimeout(() => {
-        document.body.removeChild(a);
-      }, 150);
-    }, 600);
+        setDownloadingVersion(null);
+      }, 1000);
+    }
   };
 
   const handleAddNewRelease = (e: React.FormEvent) => {
@@ -43,7 +50,7 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
       channel: 'Stable',
       platform: 'Android',
       fileSize: newSize,
-      downloadUrl: `/downloads/tiko-${newVersion}.apk`,
+      downloadUrl: `https://github.com/musabbinumair-dev/Tiko/releases/download/${newVersion}/tiko.apk`,
       isLatest: true,
       minOs: 'Android 8.0 or newer',
       changelog: [newChangelog, 'Updated build manifest and dependencies'],

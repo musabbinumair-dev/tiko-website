@@ -320,8 +320,12 @@ export const ReleasesSection: React.FC<ReleasesSectionProps> = ({
                     {/* Download Button linking to APK */}
                     <a
                       href={downloadUrl}
-                      download="tiko.apk"
-                      onClick={() => onDownload?.()}
+                      onClick={(e) => {
+                        if (isLatest && onDownload) {
+                          e.preventDefault();
+                          onDownload();
+                        }
+                      }}
                       className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl sm:rounded-full bg-white text-black font-semibold text-xs sm:text-sm hover:bg-neutral-100 active:scale-95 transition-all shadow-md w-full sm:w-auto cursor-pointer whitespace-nowrap min-h-[44px]"
                     >
                       <svg className="w-4 h-4 stroke-[2.5]" fill="none" viewBox="0 0 24 24" stroke="currentColor">

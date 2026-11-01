@@ -56,11 +56,122 @@ html, body {
   justify-content: center;
 }
 
+/* Desktop Hero Rules (>= 768px) */
 @media (min-width: 768px) {
+  :root {
+    --d-card-w: clamp(180px, min(23vw, 36dvh), 360px);
+    --card-fan-h: clamp(160px, 39dvh, 380px);
+    --card-shift-y: max(0px, calc(var(--d-card-w) * (480 / 310) - var(--card-fan-h)));
+  }
+
   .hero-section {
-    height: calc(900 * var(--u));
-    min-height: unset;
-    max-height: 100dvh;
+    width: 100%;
+    min-height: 100vh;
+    min-height: max(100dvh, 640px);
+    height: auto;
+    max-height: none;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hero-composition {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100vh !important;
+    min-height: max(100dvh, 640px) !important;
+    height: 100% !important;
+    max-height: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .card-fan-wrap {
+    height: var(--card-fan-h) !important;
+    max-height: 40dvh !important;
+    margin-bottom: 0 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  .card-fan-col {
+    margin-left: var(--d-margin-left) !important;
+    transform: translate(var(--d-translate-x), calc(var(--d-translate-y) + var(--card-shift-y))) !important;
+  }
+
+  .hero-card-base {
+    width: var(--d-card-width) !important;
+    height: auto !important;
+    aspect-ratio: var(--d-card-aspect) !important;
+    border-radius: calc(var(--d-card-w) * (40 / 310)) !important;
+    box-shadow: 0 calc(var(--d-card-w) * (20 / 310)) calc(var(--d-card-w) * (40 / 310)) rgba(0, 0, 0, 0.45) !important;
+  }
+
+  .hero-card-asset {
+    width: var(--d-asset-width) !important;
+    top: var(--d-asset-top) !important;
+  }
+
+  .hero-card-header {
+    padding-top: calc(var(--d-card-w) * (28 / 310)) !important;
+    padding-left: calc(var(--d-card-w) * (32 / 310)) !important;
+    padding-right: calc(var(--d-card-w) * (32 / 310)) !important;
+    gap: calc(var(--d-card-w) * (12 / 310)) !important;
+  }
+
+  .hero-card-title {
+    font-size: calc(var(--d-card-w) * (32 / 310)) !important;
+  }
+
+  .hero-card-btn {
+    width: calc(var(--d-card-w) * (32 / 310)) !important;
+    height: calc(var(--d-card-w) * (32 / 310)) !important;
+  }
+
+  .hero-card-btn-svg {
+    width: calc(var(--d-card-w) * (16 / 310)) !important;
+    height: calc(var(--d-card-w) * (16 / 310)) !important;
+  }
+}
+
+/* Responsive Download Button Placement:
+   - When there is space for download button below main content on desktop (height >= 720px):
+     show below main content, remove from navbar.
+   - When space is constrained on short desktop screens (height < 720px):
+     keep in navbar, hide below main content so cards and heading never crowd.
+   - Mobile (< 768px): remains below main content as originally designed.
+*/
+@media (min-width: 768px) and (min-height: 720px) {
+  .hero-main-download {
+    display: flex !important;
+  }
+  .navbar-download {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-height: 719px) {
+  .hero-main-download {
+    display: none !important;
+  }
+  .navbar-download {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-main-download {
+    display: flex !important;
+  }
+  .navbar-download {
+    display: none !important;
   }
 }
 

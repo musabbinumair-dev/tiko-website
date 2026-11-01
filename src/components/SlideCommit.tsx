@@ -13,6 +13,7 @@ export interface SlideCommitProps {
   errorLabel?: ReactNode;
   onConfirm?: () => void | Promise<unknown>;
   onDone?: () => void;
+  onAnimationComplete?: () => void;
   onError?: (reason: unknown) => void;
   trackColor?: string;
   handleColor?: string;
@@ -80,11 +81,12 @@ const Spinner = ({ size }: { size: number }) => (
 );
 
 const SlideCommit: React.FC<SlideCommitProps> = ({
-  label = 'Slide to pay',
-  doneLabel = 'Paid',
-  errorLabel = 'Payment failed',
+  label = 'Slide to Download',
+  doneLabel = 'Download Started',
+  errorLabel = "Couldn't start the download",
   onConfirm,
   onDone,
+  onAnimationComplete,
   onError,
   trackColor = '#262626',
   handleColor = '#f5f5f5',
@@ -183,6 +185,12 @@ const SlideCommit: React.FC<SlideCommitProps> = ({
   };
 
   const settle = () => {
+    try {
+      onDone?.();
+      onAnimationComplete?.();
+    } catch (err) {
+      console.error(err);
+    }
     setPhase('idle');
     animate(shown, 1, { duration: 0.2, delay: 0.12 });
     if (reduce) anchor.set(0);
@@ -200,8 +208,11 @@ const SlideCommit: React.FC<SlideCommitProps> = ({
         animate(pulse, [1, 1 - landingDip, 1], { duration: 0.46, times: [0, 0.62, 1], ease: EASE_OUT, delay: 0.1 });
       }
     }
-    onDone?.();
-    if (holdMs > 0) timer.current = setTimeout(settle, holdMs);
+    if (holdMs > 0) {
+      timer.current = setTimeout(settle, holdMs);
+    } else {
+      settle();
+    }
   };
 
   const reject = (reason: unknown) => {

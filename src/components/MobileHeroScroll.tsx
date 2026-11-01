@@ -158,9 +158,13 @@ export const MobileHeroScroll: React.FC<MobileHeroScrollProps> = ({ onDownload }
           </span>
           <a
             href="https://github.com/musabbinumair-dev/Tiko/releases/latest/download/tiko.apk"
-            download="tiko.apk"
-            onClick={() => onDownload?.()}
-            className="bg-white text-black font-semibold text-sm px-8 py-3.5 rounded-full shadow-lg active:scale-95 transition-transform inline-flex items-center justify-center no-underline"
+            onClick={(e) => {
+              if (onDownload) {
+                e.preventDefault();
+                onDownload();
+              }
+            }}
+            className="bg-white text-black font-semibold text-sm px-8 py-3.5 rounded-full shadow-lg active:scale-95 transition-transform inline-flex items-center justify-center no-underline cursor-pointer"
           >
             Get the app
           </a>
@@ -356,9 +360,13 @@ export const MobileHeroScroll: React.FC<MobileHeroScrollProps> = ({ onDownload }
           <div>
             <a
               href="https://github.com/musabbinumair-dev/Tiko/releases/latest/download/tiko.apk"
-              download="tiko.apk"
-              onClick={() => onDownload?.()}
-              className="bg-white text-black font-semibold text-sm px-8 py-3.5 rounded-full shadow-lg active:scale-95 transition-transform inline-flex items-center justify-center no-underline"
+              onClick={(e) => {
+                if (onDownload) {
+                  e.preventDefault();
+                  onDownload();
+                }
+              }}
+              className="bg-white text-black font-semibold text-sm px-8 py-3.5 rounded-full shadow-lg active:scale-95 transition-transform inline-flex items-center justify-center no-underline cursor-pointer"
             >
               Get the app
             </a>

@@ -19,7 +19,7 @@ export const INITIAL_RELEASES: AppRelease[] = [
     channel: 'Stable',
     platform: 'Android',
     fileSize: '30.7 MB',
-    downloadUrl: '/tiko.apk',
+    downloadUrl: 'https://github.com/musabbinumair-dev/Tiko/releases/latest/download/tiko.apk',
     isLatest: true,
     minOs: 'Android 8.0 or newer',
     changelog: [
@@ -36,7 +36,7 @@ export const INITIAL_RELEASES: AppRelease[] = [
     channel: 'Stable',
     platform: 'Android',
     fileSize: '33.8 MB',
-    downloadUrl: '/downloads/tiko-v1.1.4.apk',
+    downloadUrl: 'https://github.com/musabbinumair-dev/Tiko/releases/download/v1.1.4/tiko.apk',
     isLatest: false,
     minOs: 'Android 8.0 or newer',
     changelog: [
@@ -51,7 +51,7 @@ export const INITIAL_RELEASES: AppRelease[] = [
     channel: 'Beta',
     platform: 'Android',
     fileSize: '35.1 MB',
-    downloadUrl: '/downloads/tiko-v1.3.0-beta.apk',
+    downloadUrl: 'https://github.com/musabbinumair-dev/Tiko/releases/download/v1.3.0-beta.1/tiko.apk',
     isLatest: false,
     minOs: 'Android 9.0 or newer',
     changelog: [

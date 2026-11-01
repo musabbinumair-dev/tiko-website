@@ -36,6 +36,10 @@ export const CardFan: React.FC = () => {
               // CSS variables for mobile media query
               ['--m-margin-left' as string]: mob.marginLeft,
               ['--m-transform' as string]: mob.transform,
+              // CSS variables for desktop media query
+              ['--d-margin-left' as string]: idx === 0 ? '0px' : 'calc(var(--d-card-w) * (-48 / 310))',
+              ['--d-translate-x' as string]: `calc(var(--d-card-w) * (${card.translateXOffsetPx} / 310))`,
+              ['--d-translate-y' as string]: `calc(var(--d-card-w) * (${card.translateYPx} / 310))`,
             }}
           >
             <HeroCard card={card} />
