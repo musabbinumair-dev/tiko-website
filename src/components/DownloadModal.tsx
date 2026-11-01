@@ -23,17 +23,15 @@ export const DownloadModal: React.FC<DownloadModalProps> = ({ isOpen, onClose })
     setDownloadingVersion(release.version);
     setTimeout(() => {
       setDownloadingVersion(null);
-      // Trigger mock download or file link
-      const blob = new Blob([`Tiko App Release ${release.version} (Build ${release.buildNumber})\nSimulated APK binary package. Place actual .apk in /public/downloads/`], { type: 'application/vnd.android.package-archive' });
-      const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `tiko-${release.version}.apk`;
+      a.href = '/tiko.apk';
+      a.download = 'tiko.apk';
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }, 1200);
+      setTimeout(() => {
+        document.body.removeChild(a);
+      }, 150);
+    }, 600);
   };
 
   const handleAddNewRelease = (e: React.FormEvent) => {

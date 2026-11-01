@@ -129,7 +129,7 @@ export const MobileHeroScroll: React.FC<MobileHeroScrollProps> = ({ onDownload }
         
         {/* Compact Navbar */}
         <header className="w-full px-6 pt-5 pb-3 flex items-center justify-between relative z-40">
-          <span className="font-['Outfit'] font-black text-2xl text-white">Tiko</span>
+          <span className="font-['Outfit'] font-black text-3xl text-black">Tiko</span>
           <button
             type="button"
             aria-label="Navigation menu"
@@ -145,8 +145,8 @@ export const MobileHeroScroll: React.FC<MobileHeroScrollProps> = ({ onDownload }
 
         {/* Hero Block */}
         <div className="w-full flex flex-col items-center text-center pt-8 pb-10 px-4 relative z-20">
-          <div className="inline-flex items-center rounded-full bg-[#181818]/90 border border-white/10 px-4 py-1.5 mb-5">
-            <span className="font-semibold text-white/90 text-xs tracking-wide font-['Outfit']">
+          <div className="inline-flex items-center rounded-full bg-gradient-to-b from-white/[0.22] to-white/[0.08] backdrop-blur-md border border-white/30 shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),0_8px_24px_rgba(0,0,0,0.3)] px-4 py-1.5 mb-5">
+            <span className="font-semibold text-white text-xs tracking-wide font-['Outfit'] drop-shadow-sm">
               Now on Android
             </span>
           </div>
@@ -330,8 +330,8 @@ export const MobileHeroScroll: React.FC<MobileHeroScrollProps> = ({ onDownload }
         >
           {/* Badge: "Now on Android" */}
           <div className="mb-4">
-            <div className="inline-flex items-center rounded-full bg-[#181818]/90 border border-white/10 px-4 py-1.5 shadow-sm">
-              <span className="font-semibold text-white/90 text-xs tracking-wide font-['Outfit']">
+            <div className="inline-flex items-center rounded-full bg-gradient-to-b from-white/[0.22] to-white/[0.08] backdrop-blur-md border border-white/30 shadow-[inset_0_1px_1px_rgba(255,255,255,0.7),0_8px_24px_rgba(0,0,0,0.3)] px-4 py-1.5">
+              <span className="font-semibold text-white text-xs tracking-wide font-['Outfit'] drop-shadow-sm">
                 Now on Android
               </span>
             </div>

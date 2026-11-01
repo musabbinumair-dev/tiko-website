@@ -13,20 +13,20 @@ export interface AppRelease {
 
 export const INITIAL_RELEASES: AppRelease[] = [
   {
-    version: 'v1.2.0',
-    buildNumber: 120,
+    version: 'v1.0.118',
+    buildNumber: 118,
     releaseDate: 'October 31, 2026',
     channel: 'Stable',
     platform: 'Android',
-    fileSize: '34.2 MB',
-    downloadUrl: '/downloads/tiko-v1.2.0.apk',
+    fileSize: '30.7 MB',
+    downloadUrl: '/tiko.apk',
     isLatest: true,
     minOs: 'Android 8.0 or newer',
     changelog: [
-      'Introduced frosted glass navigation & card fan animations',
-      'Optimized 3D asset rendering across all desktop displays',
-      'Enhanced streak tracking and haptic feedback response',
-      'Bug fixes for task completion sync and alarm scheduler',
+      'Improve logout and delete account bottom sheets',
+      'Add drag-to-dismiss, slide animations, and outside-tap dismissal',
+      'Match delete-account typography and graphic sizing to logout sheet',
+      'Keep delete-account form visible above keyboard',
     ],
   },
   {

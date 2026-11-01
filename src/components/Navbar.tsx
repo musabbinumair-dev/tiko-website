@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import SlideCommit from './SlideCommit';
 
-const DOWNLOAD_URL = 'https://github.com/musabbinumair-dev/Tiko/releases/latest/download/tiko.apk';
+const DOWNLOAD_URL = '/tiko.apk';
 const GITHUB_REPO_URL = 'https://github.com/musabbinumair-dev/Tiko';
 
 interface NavbarProps {
@@ -92,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <GitHubButton />
       </div>
 
-      {/* Desktop Right action: Both GitHub Promotion Button + Get the App */}
+      {/* Desktop Right action: Both GitHub Promotion Button + SlideCommit Download Button */}
       <div
         className="hidden md:flex items-center"
         style={{
@@ -101,41 +102,27 @@ export const Navbar: React.FC<NavbarProps> = ({
       >
         <GitHubButton isDesktop />
 
-        <a
-          href={DOWNLOAD_URL}
-          download="tiko.apk"
-          onClick={() => onDownload?.()}
-          className="bg-white text-black font-semibold rounded-full shadow-md hover:bg-neutral-100 active:scale-95 transition-all cursor-pointer whitespace-nowrap inline-flex items-center gap-2 no-underline text-center"
-          style={{
-            padding: 'calc(10 * var(--u)) calc(20 * var(--u))',
-            fontSize: 'calc(14 * var(--u))',
+        <SlideCommit
+          label="Slide to Download"
+          doneLabel="Download Started"
+          errorLabel="Failed"
+          onConfirm={async () => {
+            onDownload?.();
+            await new Promise((resolve) => setTimeout(resolve, 600));
           }}
-        >
-          <span>Get the app</span>
-          <span
-            className="rounded-full bg-black text-white flex items-center justify-center shrink-0"
-            style={{
-              width: 'calc(20 * var(--u))',
-              height: 'calc(20 * var(--u))',
-            }}
-          >
-            <svg
-              className="stroke-[2.5]"
-              style={{
-                width: 'calc(12 * var(--u))',
-                height: 'calc(12 * var(--u))',
-              }}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </span>
-        </a>
+          trackColor="#161619"
+          handleColor="#ffffff"
+          successColor="#C8DB6A"
+          dangerColor="#ef4444"
+          width={210}
+          height={40}
+          radius={20}
+          pad={2}
+          speed={50}
+          returnBounce={0.38}
+          landingDip={0.026}
+          holdMs={1800}
+        />
       </div>
     </header>
   );

@@ -4,7 +4,7 @@ import { Navbar } from './Navbar';
 import { HeadlineBlock } from './HeadlineBlock';
 import { CardFan } from './CardFan';
 import { HERO_STARS } from '../utils/heroConfig';
-import { BlackHoleEffect } from './ui/black-hole-vortex-animation';
+import GradientASCII from './GradientASCII';
 
 const easeCurve = [0.22, 1, 0.36, 1] as const;
 
@@ -25,9 +25,19 @@ export const Hero: React.FC<HeroProps> = ({
 
   return (
     <section className="hero-section text-white select-none">
-      {/* 21st.dev Black Hole Vortex Background Animation - desktop only */}
-      <div className="absolute inset-0 z-0 opacity-80 hidden md:block pointer-events-none">
-        <BlackHoleEffect className="w-full h-full" />
+      {/* React Bits GradientASCII Background Animation - desktop and mobile view hero */}
+      <div className="absolute inset-0 z-0 opacity-85 pointer-events-none overflow-hidden">
+        <GradientASCII
+          colors={["#1e3fd8", "#c8db6a", "#a5d8ff", "#38bdf8"]}
+          shape="horizon"
+          direction="top-to-bottom"
+          characters=" ░▒▓█"
+          cellSize={18}
+          density={0.77}
+          glyphOpacity={0.65}
+          glow={1.15}
+          gradientOpacity={0.83}
+        />
       </div>
 
       {/* Film grain texture overlay */}

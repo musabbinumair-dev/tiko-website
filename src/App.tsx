@@ -2,14 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Hero } from './components/Hero';
 import { InstallModal } from './components/InstallModal';
 import { DownloadModal } from './components/DownloadModal';
-import { DownloadToast } from './components/DownloadToast';
 import { useReleaseInfo } from './utils/useReleaseInfo';
 
 export default function App() {
   const [replayKey, setReplayKey] = useState(0);
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [showDownloadModal, setShowDownloadModal] = useState(false);
-  const [showDownloadToast, setShowDownloadToast] = useState(false);
 
   const { releaseInfo } = useReleaseInfo();
   const latestVersion = releaseInfo?.version ? `v${releaseInfo.version}` : 'v1.2.0';
@@ -26,14 +24,15 @@ export default function App() {
   }, []);
 
   const handleDownload = () => {
-    setShowDownloadToast(true);
-    // Trigger direct APK download from GitHub
+    // Direct same-origin APK download of the latest release build
     const link = document.createElement('a');
-    link.href = 'https://github.com/musabbinumair-dev/Tiko/releases/latest/download/tiko.apk';
+    link.href = '/tiko.apk';
     link.download = 'tiko.apk';
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    setTimeout(() => {
+      document.body.removeChild(link);
+    }, 150);
   };
 
   const handleTabChange = (tab: string) => {
@@ -55,7 +54,7 @@ export default function App() {
         />
       </div>
 
-      {/* Interactive Modals & Toasts */}
+      {/* Interactive Modals */}
       <InstallModal
         isOpen={showInstallModal}
         onClose={() => setShowInstallModal(false)}
@@ -64,15 +63,6 @@ export default function App() {
       <DownloadModal
         isOpen={showDownloadModal}
         onClose={() => setShowDownloadModal(false)}
-      />
-
-      <DownloadToast
-        show={showDownloadToast}
-        onClose={() => setShowDownloadToast(false)}
-        onHowToInstall={() => {
-          setShowDownloadToast(false);
-          setShowInstallModal(true);
-        }}
       />
     </main>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { Smartphone } from 'lucide-react';
+import SlideCommit from './SlideCommit';
 
 const easeCurve = [0.22, 1, 0.36, 1] as const;
 
@@ -10,6 +11,11 @@ interface HeadlineBlockProps {
 
 export const HeadlineBlock: React.FC<HeadlineBlockProps> = ({ onDownload }) => {
   const shouldReduceMotion = useReducedMotion();
+
+  const handleConfirmDownload = async () => {
+    onDownload?.();
+    await new Promise((resolve) => setTimeout(resolve, 600));
+  };
 
   return (
     <div className="flex flex-col items-center justify-center text-center relative z-25 select-none w-full px-2 my-auto">
@@ -77,29 +83,26 @@ export const HeadlineBlock: React.FC<HeadlineBlockProps> = ({ onDownload }) => {
         Simple tasks. Big results.
       </p>
 
-      {/* 5. Mobile Primary CTA Button: "Get the app ->" */}
-      <div className="mt-6 xs:mt-7 sm:mt-8 md:hidden flex justify-center w-full">
-        <a
-          href="https://github.com/musabbinumair-dev/Tiko/releases/latest/download/tiko.apk"
-          download="tiko.apk"
-          onClick={() => onDownload?.()}
-          className="bg-white text-black font-bold rounded-full shadow-[0_12px_36px_rgba(0,0,0,0.7)] hover:bg-neutral-100 active:scale-95 transition-all inline-flex items-center gap-3.5 pl-7 pr-3 py-3.5 text-lg sm:text-xl no-underline cursor-pointer"
-        >
-          <span>Get the app</span>
-          <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-black text-white flex items-center justify-center shrink-0">
-            <svg
-              className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </span>
-        </a>
+      {/* 5. Download CTA Button: SlideCommit for both desktop and mobile */}
+      <div className="mt-5 xs:mt-6 sm:mt-7 md:mt-[calc(18*var(--u))] flex justify-center w-full relative z-30">
+        <SlideCommit
+          label="Slide to Download"
+          doneLabel="Download Started"
+          errorLabel="Download Failed"
+          onConfirm={handleConfirmDownload}
+          trackColor="#161619"
+          handleColor="#ffffff"
+          successColor="#C8DB6A"
+          dangerColor="#ef4444"
+          width={280}
+          height={54}
+          radius={27}
+          pad={2.5}
+          speed={50}
+          returnBounce={0.38}
+          landingDip={0.026}
+          holdMs={1800}
+        />
       </div>
     </div>
   );
